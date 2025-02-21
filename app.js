@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './config/db.js';
 import dotenv from 'dotenv';
+import authRouter from './routes/auth.routes.js';
+import userRouter from './routes/user.routes.js';
 
 dotenv.config();
 
@@ -14,6 +16,9 @@ app.use(cors());
 app.get('/', (_, res) => {
   res.status(200).json({ success: true, message: "Welcome to RY ShipChain Backend" });
 });
+
+app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 
 connectDB()
   .then(() => {
