@@ -4,6 +4,7 @@ import connectDB from './config/db.js';
 import dotenv from 'dotenv';
 import authRouter from './routes/auth.routes.js';
 import userRouter from './routes/user.routes.js';
+import shipmentRouter from './routes/shipment.routes.js';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.get('/', (_, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/shipment", shipmentRouter);
 
 connectDB()
   .then(() => {
