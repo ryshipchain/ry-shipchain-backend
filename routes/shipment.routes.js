@@ -7,8 +7,8 @@ const router = Router();
 router.post('/', [authenticate, authorize('shipper', 'carrier')], createShipment);
 router.put('/:id', [authenticate, authorize('shipper', 'carrier')], updateShipment);
 
-// router.get('/', [authenticate, authorize('shipper', 'carrier')], getAllShipments);
-// router.get('/:id', [authenticate, authorize('shipper', 'carrier')], getShipment);
-// router.delete('/:id', [authenticate, authorize('shipper', 'carrier')], deleteShipment);
+router.get('/', [authenticate, authorize('shipper', 'carrier')], getAllShipments);
+router.get('/:id', [authenticate, authorize('shipper', 'carrier')], getShipment);
+router.delete('/:id', [authenticate, authorize('shipper', 'carrier')], deleteShipment);
 
 export default router;

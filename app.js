@@ -21,7 +21,7 @@ app.get('/', (_, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
-app.use("/api/shipment", shipmentRouter);
+app.use("/api/shipments", shipmentRouter);
 app.use("/api/shipment-bids", shipmentBidRouter);
 
 connectDB().then(() => {
