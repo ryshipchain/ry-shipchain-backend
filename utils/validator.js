@@ -50,77 +50,124 @@ export const shipmentSchemaValidator = Joi.object().keys({
     'any.required': 'Name is required',
     'string.empty': 'Name cannot be empty',
   }),
-  pickup: Joi.object().keys({
+  pickUp: Joi.object().keys({
     address: Joi.object().keys({
       line1: Joi.string().required().messages({
-        'any.required': 'Pickup line1 is required',
-        'string.empty': 'Pickup line1 cannot be empty',
+        'any.required': 'Pick up line1 is required',
+        'string.empty': 'Pick up line1 cannot be empty',
       }),
       line2: Joi.string().optional().allow(''),
       city: Joi.string().required().messages({
-        'any.required': 'Pickup city is required',
-        'string.empty': 'Pickup city cannot be empty',
+        'any.required': 'Pick up city is required',
+        'string.empty': 'Pick up city cannot be empty',
       }),
       state: Joi.string().required().messages({
-        'any.required': 'Pickup state is required',
-        'string.empty': 'Pickup state cannot be empty',
+        'any.required': 'Pick up state is required',
+        'string.empty': 'Pick up state cannot be empty',
       }),
       country: Joi.string().required().messages({
-        'any.required': 'Pickup country is required',
-        'string.empty': 'Pickup country cannot be empty',
+        'any.required': 'Pick up country is required',
+        'string.empty': 'Pick up country cannot be empty',
       }),
       zip: Joi.string().required().messages({
-        'any.required': 'Pickup zip is required',
-        'string.empty': 'Pickup zip cannot be empty',
+        'any.required': 'Pick up zip is required',
+        'string.empty': 'Pick up zip cannot be empty',
       }),
-    }),
-    location: Joi.object().keys({
-      type: Joi.string().valid('Point').required().messages({
-        'any.required': 'Pickup location type is required',
-        'string.empty': 'Pickup location type cannot be empty',
-        'any.only': 'Pickup location type must be Point',
-      }),
-      coordinates: Joi.array().items(Joi.number()).length(2).required().messages({
-        'any.required': 'Pickup location coordinates are required',
-        'array.length': 'Pickup location coordinates must contain 2 numbers',
-      }),
-    }),
+    })
   }),
-  dropoff: Joi.object().keys({
+  dropOff: Joi.object().keys({
     address: Joi.object().keys({
       line1: Joi.string().required().messages({
-        'any.required': 'Dropoff line1 is required',
-        'string.empty': 'Dropoff line1 cannot be empty',
+        'any.required': 'Drop Off line1 is required',
+        'string.empty': 'Drop Off line1 cannot be empty',
       }),
       line2: Joi.string().optional().allow(''),
       city: Joi.string().required().messages({
-        'any.required': 'Dropoff city is required',
-        'string.empty': 'Dropoff city cannot be empty',
+        'any.required': 'Drop Off city is required',
+        'string.empty': 'Drop Off city cannot be empty',
       }),
       state: Joi.string().required().messages({
-        'any.required': 'Dropoff state is required',
-        'string.empty': 'Dropoff state cannot be empty',
+        'any.required': 'Drop Off state is required',
+        'string.empty': 'Drop Off state cannot be empty',
       }),
       country: Joi.string().required().messages({
-        'any.required': 'Dropoff country is required',
-        'string.empty': 'Dropoff country cannot be empty',
+        'any.required': 'Drop Off country is required',
+        'string.empty': 'Drop Off country cannot be empty',
       }),
       zip: Joi.string().required().messages({
-        'any.required': 'Dropoff zip is required',
-        'string.empty': 'Dropoff zip cannot be empty',
+        'any.required': 'Drop Off zip is required',
+        'string.empty': 'Drop Off zip cannot be empty',
       }),
-    }),
-    location: Joi.object().keys({
-      type: Joi.string().valid('Point').required().messages({
-        'any.required': 'Dropoff location type is required',
-        'string.empty': 'Dropoff location type cannot be empty',
-        'any.only': 'Dropoff location type must be Point',
+    })
+  }),
+  rate: Joi.number().greater(0).required().messages({
+    'any.required': 'Rate is required',
+    'number.empty': 'Rate cannot be empty',
+    'number.greater': 'Rate must be greater than 0',
+  }),
+  status: Joi.string().valid('created', 'bidding', 'assigned', 'picked-up', 'delivered', 'completed').messages({
+    'any.only': 'Status must be one of the following: created, bidding, assigned, picked-up, delivered, completed',
+  }),
+});
+
+export const shipmentUpdateSchemaValidator = Joi.object().keys({
+  id: Joi.string().messages({
+    // 'any.required': 'Shipment ID is required',
+    'string.empty': 'Shipment ID cannot be empty',
+  }),
+  name: Joi.string().required().messages({
+    'any.required': 'Name is required',
+    'string.empty': 'Name cannot be empty',
+  }),
+  pickUp: Joi.object().keys({
+    address: Joi.object().keys({
+      line1: Joi.string().required().messages({
+        'any.required': 'Pick up line1 is required',
+        'string.empty': 'Pick up line1 cannot be empty',
       }),
-      coordinates: Joi.array().items(Joi.number()).length(2).required().messages({
-        'any.required': 'Dropoff location coordinates are required',
-        'array.length': 'Dropoff location coordinates must contain 2 numbers',
+      line2: Joi.string().optional().allow(''),
+      city: Joi.string().required().messages({
+        'any.required': 'Pick up city is required',
+        'string.empty': 'Pick up city cannot be empty',
       }),
-    }),
+      state: Joi.string().required().messages({
+        'any.required': 'Pick up state is required',
+        'string.empty': 'Pick up state cannot be empty',
+      }),
+      country: Joi.string().required().messages({
+        'any.required': 'Pick up country is required',
+        'string.empty': 'Pick up country cannot be empty',
+      }),
+      zip: Joi.string().required().messages({
+        'any.required': 'Pick up zip is required',
+        'string.empty': 'Pick up zip cannot be empty',
+      }),
+    })
+  }),
+  dropOff: Joi.object().keys({
+    address: Joi.object().keys({
+      line1: Joi.string().required().messages({
+        'any.required': 'Drop Off line1 is required',
+        'string.empty': 'Drop Off line1 cannot be empty',
+      }),
+      line2: Joi.string().optional().allow(''),
+      city: Joi.string().required().messages({
+        'any.required': 'Drop Off city is required',
+        'string.empty': 'Drop Off city cannot be empty',
+      }),
+      state: Joi.string().required().messages({
+        'any.required': 'Drop Off state is required',
+        'string.empty': 'Drop Off state cannot be empty',
+      }),
+      country: Joi.string().required().messages({
+        'any.required': 'Drop Off country is required',
+        'string.empty': 'Drop Off country cannot be empty',
+      }),
+      zip: Joi.string().required().messages({
+        'any.required': 'Drop Off zip is required',
+        'string.empty': 'Drop Off zip cannot be empty',
+      }),
+    })
   }),
   rate: Joi.number().greater(0).required().messages({
     'any.required': 'Rate is required',

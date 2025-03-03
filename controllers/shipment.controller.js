@@ -1,5 +1,5 @@
 import Shipment from "../models/shipment.model.js";
-import { deleteShipmentSchemaValidator, getAllShipmentSchemaValidator, getShipmentSchemaValidator, shipmentSchemaValidator } from "../utils/validator.js";
+import { deleteShipmentSchemaValidator, getAllShipmentSchemaValidator, getShipmentSchemaValidator, shipmentSchemaValidator, shipmentUpdateSchemaValidator } from "../utils/validator.js";
 
 export const createShipment = async (req, res) => {
   try {
@@ -10,6 +10,29 @@ export const createShipment = async (req, res) => {
       [req.user.role]: req.user.id,
     });
     res.status(201).json({ success: true, message: "Shipment created successfully", data: shipment });
+  } catch (error) {
+    console.error("Error : ", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const updateShipment = async (req, res) => {
+  try {
+    const { error, value: validatedValue } = shipmentUpdateSchemaValidator.validate({ ...req.params, ...req.body });
+    if (error) return res.status(400).json({ success: false, message: error.details[0].message });
+
+    const { id, ...body } = validatedValue;
+    const updatedShipment = await Shipment.findByIdAndUpdate(
+      id,
+      {
+        ...body,
+        [req.user.role]: req.user.id,
+      },
+      { new: true }
+    );
+    if (!updatedShipment) return res.status(404).json({ success: false, message: "Shipment not found" });
+
+    res.status(200).json({ success: true, message: "Shipment updated successfully" });
   } catch (error) {
     console.error("Error : ", error);
     res.status(500).json({ success: false, message: error.message });

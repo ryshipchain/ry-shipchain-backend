@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const bidSchema = new mongoose.Schema(
+const shipmentBidSchema = new mongoose.Schema(
   {
     shipment: { type: mongoose.Schema.Types.ObjectId, ref: 'Shipment', required: true },
     carrier: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -8,12 +8,19 @@ const bidSchema = new mongoose.Schema(
     amount: { type: Number, required: true },
     status: {
       type: String,
-      enum: ['pending', 'accepted', 'rejected', 'rebid'],
+      enum: ['pending', 'withdraw', 'accept', 'reject', 'rebid', 'confirm'],
       default: 'pending',
     },
+    createdBy: {
+      type: String,
+      enum: ["shipper", "carrier"],
+      required: true
+    },
+    isShipperAccepted: { type: Boolean, default: false },
+    isCarrierAccepted: { type: Boolean, default: false }
   },
   { timestamps: true }
 );
 
-const Bid = mongoose.model('Bid', bidSchema);
-export default Bid;
+const ShipmentBid = mongoose.model('ShipmentBid', shipmentBidSchema);
+export default ShipmentBid;

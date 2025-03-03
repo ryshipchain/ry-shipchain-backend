@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import authRouter from './routes/auth.routes.js';
 import userRouter from './routes/user.routes.js';
 import shipmentRouter from './routes/shipment.routes.js';
+import shipmentBidRouter from './routes/shipment-bid.routes.js';
 
 dotenv.config();
 
@@ -21,15 +22,14 @@ app.get('/', (_, res) => {
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/shipment", shipmentRouter);
+app.use("/api/shipment-bids", shipmentBidRouter);
 
-connectDB()
-  .then(() => {
-    app.listen(port, () =>
-      console.log(`RY ShipChain Backend is running on port ${port}`)
-    );
-  })
-  .catch((err) => {
-    console.error(err);
-    process.exit(1);
-  });
+connectDB().then(() => {
+  app.listen(port, () =>
+    console.log(`RY ShipChain Backend is running on port ${port}`)
+  );
+}).catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
 

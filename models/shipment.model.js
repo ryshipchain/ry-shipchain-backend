@@ -6,7 +6,7 @@ const shipmentSchema = new mongoose.Schema(
     shipper: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     carrier: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     driver: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    pickup: {
+    pickUp: {
       address: {
         line1: { type: String, required: true },
         line2: { type: String },
@@ -16,11 +16,11 @@ const shipmentSchema = new mongoose.Schema(
         zip: { type: String, required: true },
       },
       location: {
-        type: { type: String, enum: ['Point'], required: true },
-        coordinates: { type: [Number], required: true },
+        type: { type: String, enum: ['Point'] },
+        coordinates: { type: [Number] },
       },
     },
-    dropoff: {
+    dropOff: {
       address: {
         line1: { type: String, required: true },
         line2: { type: String },
@@ -30,8 +30,8 @@ const shipmentSchema = new mongoose.Schema(
         zip: { type: String, required: true },
       },
       location: {
-        type: { type: String, enum: ['Point'], required: true },
-        coordinates: { type: [Number], required: true },
+        type: { type: String, enum: ['Point'] },
+        coordinates: { type: [Number] },
       },
     },
     rate: { type: Number, required: true },
